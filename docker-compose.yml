@@ -18,6 +18,8 @@ services:
   mysql:
     image: mysql:8.0
     container_name: khaitq-mysql
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password123
       MYSQL_DATABASE: db_example

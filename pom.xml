@@ -67,9 +67,6 @@
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
-						<configuration>
-							<finalName>khaitq-spring-0.0.1-SNAPSHOT</finalName>
-						</configuration>
 					</excludes>
 				</configuration>
 			</plugin>

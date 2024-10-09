@@ -1,10 +1,15 @@
-server:
-  port: 8081
+
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update  # Use 'update' for auto schema generation
+    show-sql: true  # Enable SQL query logging
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
   datasource:
-    url: jdbc:mysql://khaitq-java-mysql:3306/db_example
+    url: jdbc:mysql://khaitq-mysql:3306/db_example
     username: khaitq
     password: password123_KHAI
+
+
