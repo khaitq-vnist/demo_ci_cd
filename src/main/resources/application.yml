@@ -1,0 +1,10 @@
+server:
+  port: 8081
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://khaitq-java-mysql:3306/db_example
+    username: khaitq
+    password: password123_KHAI

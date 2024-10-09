@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  app:
+    container_name: khatq-springboot
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: khaitqvnist/springboot
+    ports:
+      - "8082:8080"
+    # restart: on-failure
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - java-app
+  mysql:
+    image: mysql:8.0
+    container_name: khaitq-java-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_DATABASE: db_example
+      MYSQL_USER: khaitq
+      MYSQL_PASSWORD: password123_KHAI
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3306" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    volumes:
+        - khatq-java-mysql-data:/var/lib/mysql
+    networks:
+        - java-app
+volumes:
+  khatq-java-mysql-data:
+networks:
+  java-app:
+    name: java-app
