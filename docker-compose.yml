@@ -17,7 +17,7 @@ services:
       - java-app
   mysql:
     image: mysql:8.0
-    container_name: khaitq-java-mysql
+    container_name: khaitq-mysql
     environment:
       MYSQL_ROOT_PASSWORD: password123
       MYSQL_DATABASE: db_example
