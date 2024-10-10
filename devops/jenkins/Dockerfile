@@ -1,15 +1,15 @@
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:lts-jdk17
 
 USER root
 
-# Install Docker
-RUN apt-get update && \
-    apt-get install -y \
-    docker.io && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Set the Jenkins user to be able to run Docker commands
-RUN usermod -aG docker jenkins
+RUN apt-get update && apt-get install -y apt-transport-https \
+    ca-certificates curl gnupg2 \
+    software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN apt-key fingerprint 0EBFCD88
+RUN add-apt-repository \
+     "deb [arch=amd64] https://download.docker.com/linux/debian \
+     $(lsb_release -cs) stable"
+RUN apt-get update && apt-get install -y docker-ce-cli
 
 USER jenkins
