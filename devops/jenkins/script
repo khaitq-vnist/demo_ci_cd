@@ -1,0 +1,11 @@
+docker build -t jenkins-new:v1 .
+docker network create jenkins
+
+
+docker run --name jenkins -d \
+  --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+  -p 8080:8080 -p 50000:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  -v docker-certs-jk:/certs/client:ro \
+  jenkins-new:v1
