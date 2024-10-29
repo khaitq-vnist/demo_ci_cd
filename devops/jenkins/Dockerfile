@@ -20,5 +20,4 @@ RUN dpkg --add-architecture amd64
 # Update package list again and install Docker CLI
 RUN apt-get update && apt-get install -y docker-ce-cli
 
-# Switch back to the Jenkins user
 USER jenkins
