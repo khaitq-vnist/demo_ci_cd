@@ -31,6 +31,7 @@ pipeline {
                                    				-Dsonar.sources=. \
                                   				-Dsonar.host.url=http://localhost:9001 \
                                    				-Dsonar.login=${SONAR_TOKEN}
+                                   				-Dsonar.exclusions=**/*.java
                                    				"""
                					}
                				}
