@@ -7,6 +7,8 @@ pipeline {
     }
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
+        SONAR_PROJECT_KEY = 'Demo_ci_cd'
+        SONAR_SCANNER_HOME = tool 'SonarQube Server'
     }
     stages {
 
@@ -19,15 +21,20 @@ pipeline {
         }
        stage('Scan quality code') {
            steps {
-               withSonarQubeEnv(installationName: 'SonarQube Server', credentialsId: 'demo-ci-cd-token') {
-                   sh """
-                       ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                       -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                       -Dsonar.sources=. \
-                       -Dsonar.host.url=http://localhost:9001 \
-                       -Dsonar.login=${SONAR_TOKEN}
-                   """
-               }
+               steps {
+               				withCredentials([string(credentialsId: 'demo-ci-cd-token', variable: 'SONAR_TOKEN')]) {
+
+               					withSonarQubeEnv('SonarQube') {
+               						sh """
+                                 				${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                                 				-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                                   				-Dsonar.sources=. \
+                                  				-Dsonar.host.url=http://192.168.1.128:9000 \
+                                   				-Dsonar.login=${SONAR_TOKEN}
+                                   				"""
+               					}
+               				}
+               			}
            }
        }
 
