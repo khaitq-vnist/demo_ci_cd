@@ -20,7 +20,7 @@ pipeline {
             }
         }
        stage('Scan quality code') {
-           steps {
+
                steps {
                				withCredentials([string(credentialsId: 'demo-ci-cd-token', variable: 'SONAR_TOKEN')]) {
 
@@ -35,7 +35,7 @@ pipeline {
                					}
                				}
                			}
-           }
+
        }
 
 //         stage('Packaging/Pushing imagae') {
