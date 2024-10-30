@@ -24,7 +24,7 @@ pipeline {
                steps {
                				withCredentials([string(credentialsId: 'demo-ci-cd-token', variable: 'SONAR_TOKEN')]) {
 
-               					withSonarQubeEnv('SonarQube') {
+               					withSonarQubeEnv('SonarQubeServer') {
                						sh """
                                  				${SONAR_SCANNER_HOME}/bin/sonar-scanner \
                                  				-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
