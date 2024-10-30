@@ -8,7 +8,7 @@ pipeline {
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
         SONAR_PROJECT_KEY = 'Demo_ci_cd'
-        SONAR_SCANNER_HOME = tool 'SonarQube Server'
+        SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
     }
     stages {
 
