@@ -17,19 +17,20 @@ pipeline {
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
-        stage('Scan quality code') {
-            steps {
-               withSonarQubeEnv(credentialsId: 'demo-ci-cd-token') {
+       stage('Scan quality code') {
+           steps {
+               withSonarQubeEnv(installationName: 'SonarQube Server', credentialsId: 'demo-ci-cd-token') {
                    sh """
-                                     				${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                                     				-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                                       				-Dsonar.sources=. \
-                                      				-Dsonar.host.url=http://localhost:9001 \
-                                       				-Dsonar.login=${SONAR_TOKEN}
-                                       				"""
+                       ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                       -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                       -Dsonar.sources=. \
+                       -Dsonar.host.url=http://localhost:9001 \
+                       -Dsonar.login=${SONAR_TOKEN}
+                   """
                }
-            }
-        }
+           }
+       }
+
 //         stage('Packaging/Pushing imagae') {
 //
 //             steps {
