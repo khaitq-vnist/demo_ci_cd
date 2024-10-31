@@ -11,20 +11,6 @@ pipeline {
         SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
     }
     stages {
-                stage('Deploy MySQL to DEV') {
-                    steps {
-                        echo 'Deploying and cleaning'
-                        sh 'docker image pull mysql:8.0'
-                        sh 'docker network create dev || echo "this network exists"'
-                        sh 'docker container stop khaitq-mysql || echo "this container does not exist" '
-                        sh 'echo y | docker container prune '
-                        sh 'docker volume rm khaitq-mysql-data || echo "no volume"'
-
-                        sh "docker run --name khaitq-mysql --rm --network dev -v khaitq-mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=db_example  -d mysql:8.0 "
-                        sh 'sleep 20'
-                        sh "docker exec -i khaitq-mysql mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} < script"
-                    }
-                }
         stage('Build with Maven') {
             steps {
                 sh 'mvn --version'
@@ -39,11 +25,7 @@ pipeline {
                        sh 'mvn jacoco:report'
                    }
                }
-        stage('Generate JaCoCo XML Report') {
-                    steps {
-                        sh 'mvn jacoco:report'
-                    }
-                }
+
         stage('Scan Quality Code') {
                    steps {
                        withCredentials([string(credentialsId: 'demo-ci-cd-token', variable: 'SONAR_TOKEN')]) {
