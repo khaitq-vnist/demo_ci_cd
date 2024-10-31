@@ -37,7 +37,8 @@ pipeline {
                                    -Dsonar.host.url=http://localhost:9001 \
                                    -Dsonar.login=${SONAR_TOKEN} \
                                    -Dsonar.jacoco.reportPath=target/jacoco.exec \
-                                   -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                                   -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+                                   -Dsonar.java.binaries=target/classes
                                """
                            }
                        }
