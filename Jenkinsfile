@@ -39,6 +39,11 @@ pipeline {
                        sh 'mvn jacoco:report'
                    }
                }
+        stage('Generate JaCoCo XML Report') {
+                    steps {
+                        sh 'mvn jacoco:report'
+                    }
+                }
         stage('Scan Quality Code') {
                    steps {
                        withCredentials([string(credentialsId: 'demo-ci-cd-token', variable: 'SONAR_TOKEN')]) {
@@ -49,7 +54,7 @@ pipeline {
                                    -Dsonar.sources=. \
                                    -Dsonar.host.url=http://localhost:9001 \
                                    -Dsonar.login=${SONAR_TOKEN} \
-                                   -Dsonar.jacoco.reportPath=target/jacoco.exec
+                                   -Dsonar.jacoco.reportPath=target/jacoco.exec \
                                    -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                                """
                            }
