@@ -44,6 +44,17 @@ pipeline {
                        }
                    }
                 }
+            stage('Quality Gate Check') {
+                        steps {
+                            script {
+                                // Wait for the quality gate status from SonarQube
+                                def qualityGate = waitForQualityGate()
+                                if (qualityGate.status != 'OK') {
+                                    error "Pipeline failed due to SonarQube quality gate failure: ${qualityGate.status}"
+                                }
+                            }
+                        }
+                    }
 //         stage('Packaging/Pushing imagae') {
 //
 //             steps {
