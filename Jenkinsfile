@@ -19,26 +19,29 @@ pipeline {
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
-       stage('Scan quality code') {
-
-               steps {
-               				withCredentials([string(credentialsId: 'demo-ci-cd-token', variable: 'SONAR_TOKEN')]) {
-
-               					withSonarQubeEnv('SonarQubeServer') {
-               						sh """
-                                 				${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                                 				-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                                   				-Dsonar.sources=. \
-                                  				-Dsonar.host.url=http://localhost:9001 \
-                                   				-Dsonar.login=${SONAR_TOKEN}
-
-                                   				"""
-               					}
-               				}
-               			}
-
-       }
-
+        stage('Test Coverage') {
+                   steps {
+                       sh 'mvn test'
+                       // Optionally, you can run JaCoCo report generation
+                       sh 'mvn jacoco:report'
+                   }
+               }
+        stage('Scan Quality Code') {
+                   steps {
+                       withCredentials([string(credentialsId: 'demo-ci-cd-token', variable: 'SONAR_TOKEN')]) {
+                           withSonarQubeEnv('SonarQubeServer') {
+                               sh """
+                                   ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                                   -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                                   -Dsonar.sources=. \
+                                   -Dsonar.host.url=http://localhost:9001 \
+                                   -Dsonar.login=${SONAR_TOKEN} \
+                                   -Dsonar.jacoco.reportPath=target/jacoco.exec
+                               """
+                           }
+                       }
+                   }
+                }
 //         stage('Packaging/Pushing imagae') {
 //
 //             steps {
