@@ -8,7 +8,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
   datasource:
     url: jdbc:mysql://mysql-test:3306/db_example
-    username: khaitq
+    username: root
     password: password123_KHAI
 
 
