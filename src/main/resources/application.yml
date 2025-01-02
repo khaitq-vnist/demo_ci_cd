@@ -1,4 +1,3 @@
-
 spring:
   jpa:
     hibernate:
@@ -8,7 +7,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
   datasource:
-    url: jdbc:mysql://localhost:3306/db_example
+    url: jdbc:mysql://mysql-test:3306/db_example
     username: khaitq
     password: password123_KHAI
 
